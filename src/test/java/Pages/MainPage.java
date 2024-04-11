@@ -1,54 +1,76 @@
 package Pages;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebElementCondition;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 
+
+import org.openqa.selenium.By;
+import static com.codeborne.selenide.Condition.interactable;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selectors.byXpath;
+import static com.codeborne.selenide.Condition.enabled;
+
 
 public class MainPage {
-    private final SelenideElement navigationToolBar = $(By.xpath("//div[@data-l='t,navigationToolbar']"));
-    private final ElementsCollection navigationToolBarButtons = $$(By.xpath("//*[contains(@class,'toolbar_nav_a')]"));
-    private final ElementsCollection navigationButtons = $$(By.xpath("//div[@class='nav-side_i-w']"));
-    private final SelenideElement navigationBar = $(By.xpath("//div[@class='nav-side __navigation __user-main']"));
-    private final SelenideElement openMessengerButton = $(By.xpath("//*[@id='msg_toolbar_button']"));
-    private final SelenideElement searchFriends = $(By.xpath("//div[@class='item_bottom-okmsg']"));
-    private final SelenideElement openMusic = $(By.xpath("//div[@class='toolbar_music-container']"));
-    private final SelenideElement playMusic = $(By.xpath("//*[@id='music_layer']/header/wm-player/wm-player-controls/button[3]"));
-    private final SelenideElement openVideo = $(By.xpath("//*[@id='hook_Block_TopMenuVideo']"));
-    private final SelenideElement playVideo = $(By.xpath("//div[@class='h-mod video-card_preview']"));
+    protected static final By navigationToolBar = By.xpath("//div[@class='topPanel']");
+    protected static final By navigationToolBarButtons = By.xpath("//*[contains(@class,'toolbar_nav_a')]");
+    protected static final By navigationButtons = By.xpath("//*[contains(@class,'nav-side_i-w')]");
+    protected static final By navigationBar = By.xpath("//div[@class='nav-side __navigation __user-main']");
+    protected static final By openMessengerButton = By.xpath("//*[@id='msg_toolbar_button']");
+    protected static final By searchFriends = By.xpath("//div[@class='item_bottom-okmsg']");
+    protected static final By openMusic = By.xpath("//div[@class='toolbar_music-container']");
+    protected static final By playMusic = By.xpath("//div[@class='play __active']");
+    protected static final By openVideo = By.xpath("//*[@id='hook_Block_TopMenuVideo']");
+    protected static final By playVideo = By.xpath("//div[@class='h-mod video-card_preview']");
+    protected static final By shareButton = By.xpath("//*[@data-l='outlandertarget,share,t,share']");
+
+
 
     public MainPage openLoggedIn() {
         LoginPage loginPage = new LoginPage();
-        Selenide.open("/");
-        loginPage.signIn("technopol32", "technopolisPassword");
+        open("/");
         return this;
     }
 
     public void checkMainPage() {
-        navigationToolBar.shouldBe();
-        navigationBar.shouldBe();
-        Assertions.assertEquals(8, navigationToolBarButtons.size());
-        Assertions.assertEquals(11, navigationButtons.size());
+        $(navigationToolBar).shouldBe(visible);
+        $(navigationBar).shouldBe(visible);
+        $(navigationToolBarButtons).shouldBe(visible).shouldHave(size(8));
+        $(navigationButtons).shouldBe(visible).shouldHave(size(11));
+    }
+
+    private WebElementCondition size(int i) {
+        return null;
     }
 
     public void clickMessenger() {
-        openMessengerButton.click();
-        searchFriends.click();
+        $(openMessengerButton).shouldBe(visible).click();
+        $(searchFriends).shouldBe(visible).click();
     }
 
     public void setPlayMusic() {
-        openMusic.click();
-        playMusic.click();
+        $(openMusic).shouldBe(visible).click();
+        $(playMusic).shouldBe(visible).click();
     }
 
     public void setPlayVideo() {
-        openVideo.click();
-        playVideo.click();
-
+        $(openVideo).shouldBe(visible).click();
+        $(playVideo).shouldBe(visible).click();
     }
+    public String copyUrl() throws IOException, UnsupportedFlavorException {
+        $(shareButton).shouldBe(interactable.because("Share button should be interactable to share")).click();
+        $(byText("Копировать ссылку")).shouldBe(visible.because("Copy button should be visible to use")).click();
+        return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+    }
+
+
+
 }
 
 
