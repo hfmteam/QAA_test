@@ -1,14 +1,10 @@
 package Pages;
+
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.open;
-
-
 import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage {
@@ -21,8 +17,10 @@ public class LoginPage {
 
 
     public LoginPage() {
+
         checkLoginPage();
     }
+
     public LoginPage open() {
         Selenide.open("/");
         return this;
@@ -36,18 +34,21 @@ public class LoginPage {
 
     public void signIn(String login, String password) {
         $(loginInput).shouldBe(visible).setValue(login);
-        $(passwordInput).shouldBe(visible).setValue(password).pressEnter();
+        $(passwordInput).shouldBe(visible).setValue(password);
     }
 
-    public void checkIncorrectLogin() {
+    public boolean checkIncorrectLogin() {
         $(loginErrorText).shouldBe(visible).shouldHave(text("Неправильно указан логин и/или пароль"));
+        return false;
     }
 
     public boolean pageAuth() {
+
         return $(buttonAuth).shouldBe(visible).isDisplayed();
     }
 
     public boolean pageAuth2() {
+
         return $(formAuth).shouldBe(visible).isDisplayed();
     }
 
@@ -57,6 +58,9 @@ public class LoginPage {
 
     }
 
+    public void pushLogin() {
 
+        $(loginButton).shouldBe(visible).click();
+    }
 
 }
