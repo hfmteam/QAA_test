@@ -24,6 +24,6 @@ public class PlayVideoTest extends BaseTest {
     public void playVideoTest() throws InterruptedException {
         mainPage.setPlayVideo();
         TimeUnit.SECONDS.sleep(5);
-        Assertions.assertTrue(mainPage.checkOpenVideo(), "Музыка играет");
+        Assertions.assertTrue(mainPage.checkOpenVideo(), "Видео воспроизводится");
     }
 }
