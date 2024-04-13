@@ -23,7 +23,7 @@ public class OpenMessengerTest extends BaseTest {
     public void clickOpenMessenger() {
         mainPage.clickMessenger();
         mainPage.setText("technopol42");
-        Assertions.assertTrue(mainPage.checkOpenMessenger(), "Музыка играет");
+        Assertions.assertTrue(mainPage.checkOpenMessenger(), "Мессенджер открывается");
     }
 
     @AfterEach
