@@ -1,35 +1,39 @@
 package Tests;
 
-import Pages.MainPage;
-import Pages.NewPage;
-import com.codeborne.selenide.Selenide;
-import org.junit.jupiter.api.*;
+import Pages.MessagePage;
+import Pages.UserMainPage;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import static Pages.BasePage.logOut;
-import static com.codeborne.selenide.WebDriverRunner.clearBrowserCache;
 
 public class OpenMessengerTest extends BaseTest {
-    private MainPage mainPage;
-    private NewPage newPage;
+    private UserMainPage userMainPage;
 
     @BeforeEach
     public void setup() {
-        NewPage newsPage = authorize();
-        mainPage = newsPage.openUserPage();
+        authorize();
+    }
+
+    @Test
+    @Tag("Search friend in messenger")
+    public void clickOpenMessenger() {
+        UserMainPage.openMessenger();
+        MessagePage.searchFriends("technopol42");
+        Assertions.assertTrue(MessagePage.checkOpenMessenger(), "Мессенджер открывается");
+        logOut();
     }
 
     @Test
     @Tag("Messenger")
-    public void clickOpenMessenger() {
-        mainPage.clickMessenger();
-        mainPage.setText("technopol42");
-        Assertions.assertTrue(mainPage.checkOpenMessenger(), "Мессенджер открывается");
+    public void sendMessageFriend() {
+        UserMainPage.openMessenger();
+        MessagePage.searchFriends("technopol42");
+        MessagePage.sendMessageFriend("Привет");
+        logOut();
     }
 
-    @AfterEach
-    public void closeBrowser() {
-        logOut();
-        clearBrowserCache();
-        Selenide.closeWebDriver();
-    }
+
 }

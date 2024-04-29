@@ -1,19 +1,18 @@
 package Pages;
 
-import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage {
-    private static final By loginInput = By.xpath(".//*[@id='field_email']");
-    private static final By passwordInput = By.xpath(".//*[@id='field_password']");
-    private static final By loginButton = By.xpath(".//input[@class='button-pro __wide']");
-    private static final By loginErrorText = By.xpath("//div[@class='input-e login_error']");
-    private static final By buttonAuth = By.xpath(".//*[@id='login_tab']");
-    private static final By formAuth = By.xpath("//div[@class='tab-body']");
+    private static final By LOGIN_INPUT = By.xpath("//*[@id='field_email']");
+    private static final By PASSWORD_INPUT = By.xpath("//*[@id='field_password']");
+    private static final By LOGIN_BUTTON = By.xpath("//input[@class='button-pro __wide']");
+    private static final By LOGIN_ERROR_TEXT = By.xpath("//div[@class='input-e login_error']");
+    private static final By BUTTON_AUTH = By.xpath("//*[@data-l='t,login_tab']");
+    private static final By FORM_AUTH = By.xpath("//*[contains(@class,'tab-body')]");
+    private static final By RETURN_BUTTON = By.xpath("//*[@data-l='t,cancel']");
 
 
     public LoginPage() {
@@ -21,46 +20,38 @@ public class LoginPage {
         checkLoginPage();
     }
 
-    public LoginPage open() {
-        Selenide.open("/");
-        return this;
+    public static void setName(String name) {
+        $(LOGIN_INPUT).shouldBe(visible.because("Login field should be visible for users to set login")).setValue(name);
+        $(LOGIN_INPUT).shouldHave(value(name));
+    }
+
+    public static void setPassword(String password) {
+        $(PASSWORD_INPUT).shouldBe(visible.because("Password field should be visible for users to set password")).setValue(password);
+        $(PASSWORD_INPUT).shouldHave(value(password));
+    }
+
+    public static void enterButton() {
+        $(LOGIN_BUTTON).shouldBe(visible.because("Login button should be visible to enter")).click();
+        //Если не видна, то $(RETURN_BUTTON).shouldBe(visible.because("The back button should be visible to return to the login page")).click();
     }
 
     private void checkLoginPage() {
-        $(loginInput).shouldBe(visible);
-        $(passwordInput).shouldBe(visible);
-        $(loginButton).shouldBe(visible);
+        $(LOGIN_INPUT).shouldBe(visible.because("Login field should be visible on login page"));
+        $(PASSWORD_INPUT).shouldBe(visible.because("Password field should be visible on login page"));
+        $(LOGIN_BUTTON).shouldBe(visible.because("Login button should be visible to enter"));
+        $(BUTTON_AUTH).shouldBe(visible.because("Authorization button should be on login page"));
+        $(FORM_AUTH).shouldBe(visible.because("Authorization form should be on login page"));
     }
 
     public void signIn(String login, String password) {
-        $(loginInput).shouldBe(visible).setValue(login);
-        $(passwordInput).shouldBe(visible).setValue(password);
+        $(LOGIN_INPUT).shouldBe(visible.because("Login field should be visible for users to set login")).setValue(login);
+        $(PASSWORD_INPUT).shouldBe(visible.because("Password field should be visible for users to set password")).setValue(password);
+        $(LOGIN_BUTTON).shouldBe(visible.because("Login button should be visible to enter")).click();
     }
 
     public boolean checkIncorrectLogin() {
-        $(loginErrorText).shouldBe(visible).shouldHave(text("Неправильно указан логин и/или пароль"));
+        $(LOGIN_ERROR_TEXT).shouldBe(visible.because("The TEXT OF THE LOGIN ERROR should be on the incorrect authorization page")).shouldHave(text("Неправильно указан логин и/или пароль"));
         return false;
-    }
-
-    public boolean pageAuth() {
-
-        return $(buttonAuth).shouldBe(visible).isDisplayed();
-    }
-
-    public boolean pageAuth2() {
-
-        return $(formAuth).shouldBe(visible).isDisplayed();
-    }
-
-    public NewPage login() {
-        $(loginButton).shouldBe(visible).click();
-        return new NewPage();
-
-    }
-
-    public void pushLogin() {
-
-        $(loginButton).shouldBe(visible).click();
     }
 
 }

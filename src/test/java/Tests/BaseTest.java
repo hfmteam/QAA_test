@@ -1,7 +1,7 @@
 package Tests;
 
 import Pages.LoginPage;
-import Pages.NewPage;
+import Pages.UserMainPage;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,7 +18,6 @@ public class BaseTest {
     private static final String password = "technopolisPassword";
 
     @BeforeAll
-
     public static void setUpTest() {
         log.info("Start Window in Chrome");
         Configuration.browser = CHROME;
@@ -27,9 +26,9 @@ public class BaseTest {
         Selenide.open("/");
     }
 
-    public static NewPage authorize() {
+    public static void authorize() {
         LoginPage loginPage = new LoginPage();
         loginPage.signIn(login, password);
-        return loginPage.login();
+        new UserMainPage();
     }
 }
