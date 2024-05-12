@@ -7,12 +7,13 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
-public class MusicPage extends BasePage {
+public class MusicPage {
     private static final By PLAY_MUSIC = By.xpath("//*[contains(@class,'play __active')]");
     private static final By OFF_VOLUME = By.xpath("//*[contains(@class,'wm-player_action-volume')]");
     private static final By ON_VOLUME = By.xpath("//*[@data-l='t,unmute']");
     private static final By ADD_MUSIC = By.xpath("//*[contains(@class,'action __add')]");
     private static final By MUSIC_PAGE = By.xpath("//*[@id='music_layer_holder']");
+    private static final By CLOSE_MUSIC_PAGE = By.xpath("//*[@aria-label='Закрыть']");
 
     public MusicPage() {
         checkMusicPage();

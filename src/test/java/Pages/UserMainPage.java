@@ -1,6 +1,7 @@
 package Pages;
 
 import org.openqa.selenium.By;
+import utils.TopPanel;
 
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
@@ -14,8 +15,10 @@ import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
 
 
-public class UserMainPage extends BasePage {
+public class UserMainPage {
     private static final By NAVIGATION_TOOLBAR = By.xpath("//div[@class='topPanel']");
+    private static final By EXIT_BUTTON = By.xpath("//div[@class='toolbar_accounts-user-delete-button']");
+    private static final By CONFIRMATION_OF_EXIT_BUTTON = By.xpath("//*[@id='hook_FormButton_logoff.confirm_not_decorate']");
     private static final By NAVIGATION_BAR = By.xpath("//*[@id='hook_Block_SideNavigation']");
     private static final By OPEN_MESSENGER_BUTTON = By.xpath("//*[@id='msg_toolbar_button']");
     private static final By OPEN_MUSIC = By.xpath("//div[@class='toolbar_music-container']");
@@ -25,14 +28,10 @@ public class UserMainPage extends BasePage {
     private static final By AVATAR = byXpath("//div[@class='card_wrp']");
     private static final By USER_BUTTON = byXpath("//*[@data-l='t,userPage']");
     private static final By OPEN_VIDEO_PAGE = By.xpath("//*[@id='hook_Block_TopMenuVideo']");
-
+    private final TopPanel topPanel = new TopPanel();
 
     public UserMainPage() {
         checkMainPage();
-    }
-
-    public static void openMessenger() {
-        $(OPEN_MESSENGER_BUTTON).shouldBe(visible.because("OPEN MESSENGER BUTTON should be visible to click")).click();
     }
 
     public static boolean openMusic() {
@@ -54,6 +53,22 @@ public class UserMainPage extends BasePage {
         $(OPEN_VIDEO_PAGE).shouldBe(visible.because("OPEN VIDEO button should be visible to click")).click();
     }
 
+    public MessagePage goToMessage() {
+        topPanel.getMessageButton()
+                .shouldBe(visible.because("The message button should be visible before clicking")).click();
+        return new MessagePage();
+    }
+
+    public void logout() {
+        topPanel.getProfileSettingsButton()
+                .shouldBe(visible.because("The profile settings button should be visible before clicking"))
+                .click();
+        $(EXIT_BUTTON).shouldBe(visible.because("The logout form should be visible before clicking"))
+                .click();
+        $(CONFIRMATION_OF_EXIT_BUTTON).shouldBe(visible.because("The logout button should be visible before clicking"))
+                .click();
+    }
+
     public void checkMainPage() {
         $(NAVIGATION_TOOLBAR).shouldBe(visible.because("NavigationToolBar should be visible on user main page"));
         $(NAVIGATION_BAR).shouldBe(visible.because("NavigationBar should be visible on user main page"));
@@ -62,9 +77,6 @@ public class UserMainPage extends BasePage {
         $(AVATAR).shouldBe(visible.because("AVATAR should be visible on user main page"));
     }
 
-    public boolean checkMoment() {
-        return ($(byText("Моменты")).exists());
-    }
 
 }
 

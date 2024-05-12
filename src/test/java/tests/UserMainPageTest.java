@@ -1,15 +1,12 @@
-package Tests;
+package tests;
 
+import Pages.LoginPage;
 import Pages.UserMainPage;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-import static Pages.BasePage.logOut;
 import static com.codeborne.selenide.Selenide.webdriver;
 import static com.codeborne.selenide.WebDriverConditions.url;
 import static java.time.Duration.ofMillis;
@@ -20,7 +17,14 @@ public class UserMainPageTest extends BaseTest {
 
     @BeforeEach
     public void setup() {
-        authorize();
+        LoginPage loginPage = new LoginPage(driver).get();
+        userMainPage = loginPage.login();
+
+    }
+
+    @AfterEach
+    public void logoutUser() {
+        userMainPage.logout();
     }
 
     @Test
@@ -33,7 +37,7 @@ public class UserMainPageTest extends BaseTest {
                 "Ссылка скопирована неправильно");
         assertThatThrownBy(() ->
                 webdriver().shouldHave(url("https://ok.ru/profile/586090035583?utm_campaign=web_share&utm_content=profile"), ofMillis(10)));
-        logOut();
+
     }
 
 

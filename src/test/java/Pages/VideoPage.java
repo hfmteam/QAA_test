@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 
-public class VideoPage extends BasePage {
+public class VideoPage {
 
     private static final By PLAY_VIDEO_PREVIEW = By.xpath("//div[@class='h-mod video-card_preview']");
     private static final By VIDEO_PANEL = By.xpath("//*[@id='listBlockPanelVideoUniversalContentBlock']");

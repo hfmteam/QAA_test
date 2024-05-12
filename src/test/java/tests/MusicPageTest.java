@@ -1,14 +1,13 @@
-package Tests;
+package tests;
 
+import Pages.LoginPage;
 import Pages.MusicPage;
 import Pages.UserMainPage;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import static Pages.BasePage.logOut;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@DisplayName(" Test")
 
 public class MusicPageTest extends BaseTest {
 
@@ -17,7 +16,14 @@ public class MusicPageTest extends BaseTest {
 
     @BeforeEach
     public void setup() {
-        authorize();
+        LoginPage loginPage = new LoginPage(driver).get();
+        userMainPage = loginPage.login();
+
+    }
+
+    @AfterEach
+    public void logoutUser() {
+        userMainPage.logout();
     }
 
     @Test
@@ -26,7 +32,6 @@ public class MusicPageTest extends BaseTest {
         UserMainPage.openMusic();
         MusicPage.setPlayMusic();
         Assertions.assertTrue(UserMainPage.openMusic(), "Музыка играет");
-        logOut();
     }
 
     @Test
@@ -36,7 +41,6 @@ public class MusicPageTest extends BaseTest {
         MusicPage.addFavouriteMusic();
         String textFavourite = MusicPage.checkAddFavouriteMusic();
         Assertions.assertEquals("Песня добавлена. Вам также может понравиться", textFavourite);
-        logOut();
     }
 
     @Test
@@ -46,7 +50,6 @@ public class MusicPageTest extends BaseTest {
         MusicPage.setPlayMusic();
         MusicPage.offVolumeMusic();
         assertTrue(MusicPage.checkoffVolumeMusic());
-        logOut();
     }
 
 }

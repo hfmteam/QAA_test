@@ -1,19 +1,25 @@
-package Tests;
+package tests;
 
+import Pages.LoginPage;
 import Pages.UserMainPage;
 import Pages.VideoPage;
 import Pages.VideoPlayerPage;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import static Pages.BasePage.logOut;
 
 public class PlayVideoTest extends BaseTest {
+    private UserMainPage userMainPage;
+
     @BeforeEach
     public void setup() {
-        authorize();
+        LoginPage loginPage = new LoginPage(driver).get();
+        userMainPage = loginPage.login();
+
+    }
+
+    @AfterEach
+    public void logoutUser() {
+        userMainPage.logout();
     }
 
     @Test
@@ -27,7 +33,7 @@ public class PlayVideoTest extends BaseTest {
         Assertions.assertTrue(VideoPlayerPage.checkOpenVideo(), "Видео воспроизводится");
         VideoPlayerPage.pauseVideo();
         VideoPlayerPage.closeVideoPlayer();
-        logOut();
+
     }
 
     @Test
@@ -43,7 +49,7 @@ public class PlayVideoTest extends BaseTest {
         VideoPlayerPage.likeVideo();
         Assertions.assertTrue(VideoPlayerPage.checkLikeVideo(), "Лайк прожат");
         VideoPlayerPage.closeVideoPlayer();
-        logOut();
+
     }
 
 }
