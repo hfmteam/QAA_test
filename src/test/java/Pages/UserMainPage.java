@@ -20,7 +20,6 @@ public class UserMainPage {
     private static final By EXIT_BUTTON = By.xpath("//div[@class='toolbar_accounts-user-delete-button']");
     private static final By CONFIRMATION_OF_EXIT_BUTTON = By.xpath("//*[@id='hook_FormButton_logoff.confirm_not_decorate']");
     private static final By NAVIGATION_BAR = By.xpath("//*[@id='hook_Block_SideNavigation']");
-    private static final By OPEN_MESSENGER_BUTTON = By.xpath("//*[@id='msg_toolbar_button']");
     private static final By OPEN_MUSIC = By.xpath("//div[@class='toolbar_music-container']");
     private static final By SHARE_BUTTON = By.xpath("//*[@class='u-menu_a button-clear']");
     private static final By MOMENTS_BUTTON = byXpath("//button[@data-l='t,to_moments']");

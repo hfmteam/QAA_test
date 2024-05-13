@@ -28,7 +28,8 @@ public class UserMainPageTest extends BaseTest {
     }
 
     @Test
-    @Tag("User_test")
+    @Tag("User")
+    @DisplayName("copy User URL in profile & verification")
     public void copyUserURL() throws IOException, UnsupportedFlavorException {
         UserMainPage.openUserPage();
         String userURl;

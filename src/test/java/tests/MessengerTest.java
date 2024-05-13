@@ -71,7 +71,8 @@ public class MessengerTest extends BaseTest {
     }
 
     @Test
-    @Tag("SearchFriendInMessenger")
+    @Tag("Search")
+    @DisplayName("Search Friend In Messenger")
     public void searchFriends() {
         messagePage.searchFriends(FRIEND_NAME);
         assertTrue(messagePage.getResultsList().searchElement(FRIEND_NAME).exists(),
@@ -80,7 +81,8 @@ public class MessengerTest extends BaseTest {
 
     @ParameterizedTest(name = "Sending a message with the text: {0}.")
     @ValueSource(strings = {"Привет", "Как дела?", "Автотест работает"})
-    @Tag("SendMessageTest")
+    @Tag("Message")
+    @DisplayName("Send Message friend")
     public void sendMessageFriend(String messageText) {
         messagePage.searchFriends(FRIEND_NAME).sendMessageFriend(messageText);
         assertTrue(messagePage.getMessageList().searchElement(messageText).exists(),

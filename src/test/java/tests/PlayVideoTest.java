@@ -16,14 +16,14 @@ public class PlayVideoTest extends BaseTest {
         userMainPage = loginPage.login();
 
     }
-
     @AfterEach
     public void logoutUser() {
         userMainPage.logout();
     }
 
     @Test
-    @Tag("Play_Video")
+    @Tag("Video")
+    @DisplayName("Play Video test")
     public void playVideoTest() {
         UserMainPage.openVideoPage();
         VideoPage.checkVideoPage();
@@ -37,7 +37,8 @@ public class PlayVideoTest extends BaseTest {
     }
 
     @Test
-    @Tag("Like_it")
+    @Tag("Video")
+    @DisplayName("Play Video & Like it test")
     public void setClassVideo() {
         UserMainPage.openVideoPage();
         VideoPage.checkVideoPage();

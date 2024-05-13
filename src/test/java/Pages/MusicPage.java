@@ -13,7 +13,6 @@ public class MusicPage {
     private static final By ON_VOLUME = By.xpath("//*[@data-l='t,unmute']");
     private static final By ADD_MUSIC = By.xpath("//*[contains(@class,'action __add')]");
     private static final By MUSIC_PAGE = By.xpath("//*[@id='music_layer_holder']");
-    private static final By CLOSE_MUSIC_PAGE = By.xpath("//*[@aria-label='Закрыть']");
 
     public MusicPage() {
         checkMusicPage();
